@@ -5,7 +5,7 @@
   box-sizing: border-box;
 }
 
-/* Reset and base styles */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -20,81 +20,70 @@ body {
 }
 
 /* Header */
-.site-header {
+#site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   background: #222;
   color: #fff;
   padding: 1rem 2rem;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
 }
 
-.site-header h1 {
-  font-size: 1.8rem;
-  margin: 0;
-}
-
-.site-header nav a {
+#site-header .siteName a {
   color: #fff;
   text-decoration: none;
-  margin: 0 0.25rem;
+  font-size: 1.8rem;
+  font-weight: bold;
 }
 
-.site-header nav a:hover {
+#site-header .siteName a:hover {
   text-decoration: underline;
 }
-/* Header navigation with ul */
-.site-header {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  background: #222;
+
+#tools a {
   color: #fff;
-  padding: 1rem 2rem;
+  text-decoration: none;
+  background: #c00;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  transition: background 0.3s;
 }
 
-.site-header h1 {
-  font-size: 1.8rem;
-  margin: 0;
+#tools a:hover {
+  background: #a00;
 }
 
-.site-header nav ul {
+/* Navigation */
+.site-header {
+  background: #333;
+  padding: 0.5rem 2rem;
+}
+
+.site-header ul {
   display: flex;
-  /* places items in a row */
   list-style: none;
-  /* removes bullet points */
   margin: 0;
   padding: 0;
-  gap: 1rem;
-  /* space between items */
+  gap: 1.5rem;
 }
 
-.site-header nav ul li a {
+.site-header ul li a {
   color: #fff;
   text-decoration: none;
   font-size: 1rem;
   transition: color 0.3s;
 }
 
-.site-header nav ul li a:hover {
+.site-header ul li a:hover {
   text-decoration: underline;
   color: #ddd;
 }
 
-/* Mobile adjustment */
-@media (max-width: 768px) {
-  .site-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 0.5rem;
-  }
-
-  .site-header nav ul {
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+/* Optional pipe separators */
+.site-header ul li:not(:last-child)::after {
+  content: "|";
+  color: #888;
+  margin-left: 1.5rem;
 }
 
 /* Main container */
@@ -203,10 +192,6 @@ body {
   left: 0;
 }
 
-.reviews li {
-  font-style: italic;
-}
-
 .reviews li::before {
   content: "★";
   color: gold;
@@ -226,10 +211,20 @@ footer {
 
 /* Mobile layout */
 @media (max-width: 768px) {
-  .site-header {
+  #site-header {
     flex-direction: column;
     text-align: center;
     gap: 0.5rem;
+  }
+
+  .site-header ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  /* Remove pipe separators on mobile */
+  .site-header ul li:not(:last-child)::after {
+    content: none;
   }
 
   .container {
