@@ -44,6 +44,58 @@ body {
 .site-header nav a:hover {
   text-decoration: underline;
 }
+/* Header navigation with ul */
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  background: #222;
+  color: #fff;
+  padding: 1rem 2rem;
+}
+
+.site-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.site-header nav ul {
+  display: flex;
+  /* places items in a row */
+  list-style: none;
+  /* removes bullet points */
+  margin: 0;
+  padding: 0;
+  gap: 1rem;
+  /* space between items */
+}
+
+.site-header nav ul li a {
+  color: #fff;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s;
+}
+
+.site-header nav ul li a:hover {
+  text-decoration: underline;
+  color: #ddd;
+}
+
+/* Mobile adjustment */
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+  }
+
+  .site-header nav ul {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
 
 /* Main container */
 .container {
