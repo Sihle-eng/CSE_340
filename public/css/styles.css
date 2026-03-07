@@ -9,7 +9,6 @@
 * {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
@@ -271,11 +270,9 @@ footer {
 
   .upgrades-reviews {
     grid-template-columns: 1fr;
-    /* stack upgrades and reviews */
   }
 
   .updates-grid {
     grid-template-columns: 1fr;
-    /* optional: stack upgrade items */
   }
 }
