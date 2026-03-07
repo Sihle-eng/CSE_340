@@ -4,8 +4,6 @@
 *:after {
   box-sizing: border-box;
 }
-
-/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -105,7 +103,6 @@ body {
 .featured-car {
   display: flex;
   flex-direction: column;
-  /* stack image above details */
   gap: 1.5rem;
   background: #fff;
   padding: 1.5rem;
@@ -115,7 +112,6 @@ body {
 
 .car-image {
   width: 100%;
-  /* full width of container */
   height: auto;
   border-radius: 4px;
   object-fit: cover;
@@ -175,7 +171,7 @@ body {
   padding-bottom: 0.5rem;
 }
 
-/* Upgrades grid – using your class "updates-grid" */
+/* Upgrades grid */
 .updates-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -221,7 +217,7 @@ body {
 }
 
 .reviews li::before {
-  content: "★";
+  content: "»";
   color: gold;
   font-weight: bold;
   position: absolute;
