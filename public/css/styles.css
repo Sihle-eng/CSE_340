@@ -79,7 +79,7 @@ body {
   color: #ddd;
 }
 
-/* Optional pipe separators */
+/* Pipe separators between nav items */
 .site-header ul li:not(:last-child)::after {
   content: "|";
   color: #888;
@@ -105,6 +105,8 @@ body {
 
 .featured-car {
   display: flex;
+  flex-direction: column;
+  /* stack image above details */
   gap: 1.5rem;
   background: #fff;
   padding: 1.5rem;
@@ -113,7 +115,8 @@ body {
 }
 
 .car-image {
-  width: 200px;
+  width: 100%;
+  /* full width of container */
   height: auto;
   border-radius: 4px;
   object-fit: cover;
@@ -148,13 +151,14 @@ body {
   background: #a00;
 }
 
-/* Upgrades and Reviews aside */
+/* Right column: upgrades and reviews side by side */
 .upgrades-reviews {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 2rem;
 }
 
+/* Upgrades section */
 .upgrades,
 .reviews {
   background: #fff;
@@ -172,24 +176,49 @@ body {
   padding-bottom: 0.5rem;
 }
 
-.upgrades ul,
+/* Upgrades grid – using your class "updates-grid" */
+.updates-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.upgrade-item {
+  text-align: center;
+  background: #f0f0f0;
+  padding: 1rem;
+  border-radius: 6px;
+  transition: transform 0.2s;
+}
+
+.upgrade-item:hover {
+  transform: scale(1.02);
+}
+
+.upgrade-item img {
+  width: 100%;
+  max-width: 120px;
+  height: auto;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+}
+
+.upgrade-item span {
+  display: block;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Reviews list */
 .reviews ul {
   list-style: none;
 }
 
-.upgrades li,
 .reviews li {
   margin-bottom: 0.5rem;
   padding-left: 1.5rem;
   position: relative;
-}
-
-.upgrades li::before {
-  content: "•";
-  color: #c00;
-  font-weight: bold;
-  position: absolute;
-  left: 0;
 }
 
 .reviews li::before {
@@ -232,17 +261,21 @@ footer {
   }
 
   .featured-car {
-    flex-direction: column;
     align-items: center;
     text-align: center;
   }
 
-  .car-image {
-    width: 100%;
-    max-width: 300px;
-  }
-
   .car-details ul {
     text-align: left;
+  }
+
+  .upgrades-reviews {
+    grid-template-columns: 1fr;
+    /* stack upgrades and reviews */
+  }
+
+  .updates-grid {
+    grid-template-columns: 1fr;
+    /* optional: stack upgrade items */
   }
 }
