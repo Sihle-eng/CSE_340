@@ -43,7 +43,8 @@ Util.buildClassificationGrid = async function (data) {
             grid += '<h2>'
             grid += '<a href="../../inv/detail/' + vehicle.inv_id + '" title="View ' 
                 + vehicle.inv_make + ' ' + vehicle.inv_model + ' details">'
-                + vehicle.inv_make + ' ' + vehicle.inv_model + '</a>'
+                + vehicle.inv_make
+                 + ' ' + vehicle.inv_model + '</a>'
             grid += '</h2>'
             grid += '<span>$' 
                 + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</span>'
@@ -57,6 +58,28 @@ Util.buildClassificationGrid = async function (data) {
     return grid
 }
 
+// /* **************************************
+// * Build the vehicle details view HTML
+// * ************************************ */
+// Util.buildVehicleDetails = async function (vehicleData) {
+//     const price = new Intl.NumberFormat('en-US').format(vehicleData.inv_price);
+
+//     return `
+//     <section class="vehicle-detail">
+//         <div class="vehicle-image">
+//             <img src="${vehicleData.inv_image}" alt="Image of ${vehicleData.inv_make} ${vehicleData.inv_model} on CSE Motors">
+//             </div>
+//             <div class="vehicle-info">
+//                 <h2>${vehicleData.inv_make} ${vehicleData.inv_model}</h2>
+//                 <p><strong>Price:</strong> $${price}</p>
+//                 <p><strong>Mileage:</strong> ${vehicleData.inv_miles.toLocaleString()} miles</p>
+//                 <p><strong>Description:</strong> ${vehicleData.inv_description}</p>
+//                 <p><strong>Color:</strong> ${vehicleData.inv_color}</p>
+//                 <p><strong>Classification:</strong> ${vehicleData.classification_name}</p>
+//                 </div>
+//             </section>
+//             `;
+// }
 
 
 
