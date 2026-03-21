@@ -14,6 +14,8 @@ const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities")
 
+const errorRoute = require("./routes/errorRoute")
+
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
@@ -29,6 +31,8 @@ app.use(static)
 app.get("/", baseController.buildHome)
 // Inventory by classification route
 app.use("/inv", inventoryRoute)
+// Error trigger route
+app.use("/error", errorRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
