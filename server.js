@@ -15,8 +15,9 @@ const inventoryRoute = require("./routes/inventoryRoute")
 const utilities = require("./utilities")
 const session = require("express-session")
 const pool = require('./database')
-
 const errorRoute = require("./routes/errorRoute")
+const accountRoute = require("./routes/accountRoute")
+const bodyParser = require("body-parser")
 
 app.set("view engine", "ejs")
 app.use(expressLayouts)
@@ -36,6 +37,10 @@ app.use(session({
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
 
 // Express messages middleware
 app.use(require('connect-flash')())
@@ -66,8 +71,11 @@ app.use(static)
 app.get("/", baseController.buildHome)
 // Inventory by classification route
 app.use("/inv", inventoryRoute)
+
 // Error trigger route
 app.use("/error", errorRoute)
+// Account route (must be before 404 handler)
+app.use("/account", accountRoute)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

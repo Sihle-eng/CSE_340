@@ -1,5 +1,13 @@
+
 const invModel = require('../models/inventory-model')
 const Util = {}
+
+// Async error handler for Express routes
+Util.handleErrors = function (fn) {
+    return function (req, res, next) {
+        Promise.resolve(fn(req, res, next)).catch(next)
+    }
+}
 
 /* ************************
  * Constructs the nav HTML unordered list

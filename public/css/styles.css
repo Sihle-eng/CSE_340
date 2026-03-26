@@ -363,3 +363,93 @@ footer {
   font-size: 1.5rem;
   margin: 1rem 0;
 }
+
+main {
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 2rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.flash-message {
+  background: #ffe0e0;
+  color: #a00;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  border-radius: 4px;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form label {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.login-form input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.25rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.login-form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1.5rem;
+  background: #0077cc;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-form button:hover {
+  background: #005fa3;
+}
+
+.register-link {
+  text-align: center;
+  margin-top: 1rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  main {
+    margin: 20px;
+    padding: 1.5rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .login-form button {
+    font-size: 0.9rem;
+    padding: 0.6rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  main {
+    max-width: 600px;
+    /* wider for laptops */
+    padding: 2.5rem;
+    /* a bit more breathing room */
+  }
+}
