@@ -4,16 +4,14 @@
 *:after {
   box-sizing: border-box;
 }
-* {
-  margin: 0;
-  padding: 0;
-}
 
 body {
   font-family: Arial, sans-serif;
   line-height: 1.6;
   color: #333;
   background: #f8f8f8;
+  margin: 0;
+  padding: 0;
 }
 
 /* Header */
@@ -125,6 +123,7 @@ body {
 .car-details ul {
   list-style: none;
   margin-bottom: 1rem;
+  padding: 0;
 }
 
 .car-details li {
@@ -208,6 +207,7 @@ body {
 /* Reviews list */
 .reviews ul {
   list-style: none;
+  padding: 0;
 }
 
 .reviews li {
@@ -279,6 +279,7 @@ footer {
   gap: 2rem;
   margin: 2rem auto;
   max-width: 1200px;
+  padding: 0 1rem;
 }
 
 .vehicle-image {
@@ -320,6 +321,7 @@ footer {
   padding: 0;
   margin: 2rem auto;
   max-width: 1200px;
+  padding: 0 1rem;
 }
 
 /* Each vehicle card */
@@ -364,7 +366,7 @@ footer {
   margin: 1rem 0;
 }
 
-main {
+.form {
   max-width: 400px;
   margin: 50px auto;
   padding: 2rem;
@@ -428,10 +430,18 @@ h1 {
   margin-top: 1rem;
 }
 
+/* Fix for main content - ensures all main content is centered */
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  width: 100%;
+}
+
 /* Responsive tweaks */
 @media (max-width: 480px) {
   main {
-    margin: 20px;
+    margin: 20px auto;
     padding: 1.5rem;
   }
 
@@ -447,9 +457,8 @@ h1 {
 
 @media (min-width: 1024px) {
   main {
-    max-width: 600px;
-    /* wider for laptops */
-    padding: 2.5rem;
-    /* a bit more breathing room */
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
   }
 }
