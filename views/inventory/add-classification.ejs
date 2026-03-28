@@ -2,7 +2,7 @@
     <main class="form">
         <h1>Add Classification</h1>
         <%- messages() %>
-        <form id="addClassificationForm" action="/inventory/add-classification" method="POST" novalidate>
+        <form id="addClassificationForm" action="/inv/add-classification" method="POST" novalidate>
             <label for="classification_name">Classification Name:</label>
             <input type="text" id="classification_name" name="classification_name" required pattern="^[A-Za-z0-9]+$" title="No spaces or special characters allowed">
             <span class="form-direction">Classification name cannot contain a space or special character of any kind.</span>

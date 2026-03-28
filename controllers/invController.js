@@ -54,7 +54,7 @@ invCont.addInventory = async function (req, res, next) {
         });
         if (result && result.rowCount === 1) {
             req.flash("notice", "Inventory item added successfully!");
-            return res.redirect("/inventory/");
+            return res.redirect("/inv/");
         } else {
             let classificationList = await utilities.buildClassificationList(classification_id);
             req.flash("notice", "Failed to add inventory item.");
@@ -113,7 +113,7 @@ invCont.addClassification = async function (req, res, next) {
             // Success: update nav and render management view with success message
             nav = await utilities.getNav();
             req.flash("notice", "Classification added successfully!");
-            return res.redirect("/inventory/");
+            return res.redirect("/inv/");
         } else {
             req.flash("notice", "Failed to add classification.");
             return res.render("inventory/add-classification", {

@@ -1,7 +1,6 @@
-<% layout('layouts/layout') %>
 
 <h1>Inventory Management</h1>
-
+<%- messages() %>
 <!-- Flash message from controller -->
 <% if (typeof message !=='undefined' && message) { %>
     <div class="flash-message">
@@ -12,7 +11,7 @@
 <nav>
     <ul>
         <!-- Links go through controller routes, not directly to views -->
-        <li><a href="/inventory/add-classification">Add New Classification</a></li>
-        <li><a href="/inventory/add-inventory">Add New Inventory Item</a></li>
+        <li><a href="/inv/add-classification">Add New Classification</a></li>
+        <li><a href="/inv/add-inventory">Add New Inventory Item</a></li>
     </ul>
 </nav>
