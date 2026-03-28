@@ -1,6 +1,27 @@
 
-const invModel = require('../models/inventory-model')
 const Util = {}
+
+Util.buildClassificationList = async function (classification_id = null) {
+        let data = await invModel.getClassifications()
+        let classificationList =
+            '<select name="classification_id" id="classificationList" required>'
+        classificationList += "<option value=''>Choose a Classification</option>"
+        data.rows.forEach((row) => {
+            classificationList += '<option value="' + row.classification_id + '"'
+            if (
+                classification_id != null &&
+                row.classification_id == classification_id
+            ) {
+                classificationList += " selected "
+            }
+            classificationList += ">" + row.classification_name + "</option>"
+        })
+        classificationList += "</select>"
+        return classificationList
+}
+
+const invModel = require('../models/inventory-model')
+
 
 // Async error handler for Express routes
 Util.handleErrors = function (fn) {
@@ -19,7 +40,7 @@ Util.getNav = async function (req, res, next) {
     data.rows.forEach((row) => {
         list += "<li>"
         list += 
-            '<a href="/inv/type/' +
+            '<a href="/inventory/type/' +
             row.classification_id +
             '" title="See our inventory of ' +
             row.classification_name +

@@ -462,3 +462,110 @@ main {
     padding: 0 2rem;
   }
 }
+
+form#addInventoryForm {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: #fff;
+  border: 2px solid #000;
+  border-radius: 6px;
+}
+
+form#addInventoryForm label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+  color: #000;
+}
+
+form#addInventoryForm input,
+form#addInventoryForm textarea,
+form#addInventoryForm select {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #000;
+}
+
+form#addInventoryForm input:focus,
+form#addInventoryForm textarea:focus,
+form#addInventoryForm select:focus {
+  outline: none;
+  border-color: #333;
+  background-color: #f9f9f9;
+}
+
+form#addInventoryForm button {
+  background-color: #000;
+  color: #fff;
+  padding: 0.8rem 1.2rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+form#addInventoryForm button:hover {
+  background-color: #333;
+}
+
+form#addClassificationForm label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+form#addClassificationForm input {
+  width: 100%;
+  padding: 0.7rem;
+  margin-bottom: 1rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #000;
+}
+
+form#addClassificationForm input:focus {
+  outline: none;
+  border-color: #333;
+  background-color: #f9f9f9;
+}
+
+.form-direction {
+  font-size: 0.85rem;
+  color: #555;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+form#addClassificationForm button {
+  width: 100%;
+  padding: 0.8rem;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+form#addClassificationForm button:hover {
+  background-color: #333;
+}
+
+ul.notice {
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid #000;
+  background-color: #f9f9f9;
+  list-style-type: none;
+}
+
+ul.notice li {
+  color: #000;
+  margin-bottom: 0.5rem;
+}
+
