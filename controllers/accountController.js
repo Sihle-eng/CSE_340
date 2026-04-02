@@ -2,6 +2,8 @@
 const utilities = require("../utilities")
 const accModel = require("../models/account-model")
 const bcrypt = require("bcryptjs")
+const jwt = require("jsonwebtoken")
+require("dotenv").config()
 
 /* ****************************************
 *  Deliver login view
@@ -29,21 +31,8 @@ async function buildRegister(req, res) {
 }
 
 /* ****************************************
-*  Process account registration (stub)
+*  Process account registration
 * *************************************** */
-async function registerAccount(req, res) {
-    // Registration logic goes here
-    res.send("Account registration not yet implemented.")
-}
-
-/* ****************************************
-*  Process account login (stub)
-* *************************************** */
-async function loginAccount(req, res) {
-    // Login logic goes here
-    res.send("Account login not yet implemented.")
-}
-
 async function registerAccount(req, res) {
     let nav = await utilities.getNav()
     const { account_firstname, account_lastname, account_email, account_password } = req.body
@@ -51,10 +40,8 @@ async function registerAccount(req, res) {
     // Hash the password before storing
     let hashedPassword
     try {
-        // regular password and cost (salt is generated automatically)
-        hashedPassword = await bcrypt.hashSync(account_password, 10)
+        hashedPassword = await bcrypt.hash(account_password, 10)
     } catch (error) {
-        req.flash("notice", 'Sorry, there was an error processing the registration.')
         res.status(500).render("account/register", {
             title: "Registration",
             nav,
@@ -74,10 +61,6 @@ async function registerAccount(req, res) {
     )
 
     if (regResult) {
-        req.flash(
-            "notice",
-            `Congratulations, you\'re registered ${account_firstname}. Please log in`
-        )
         res.status(201).render("account/login", {
             title: "Login",
             nav,
@@ -85,7 +68,6 @@ async function registerAccount(req, res) {
             email: account_email,
         })
     } else {
-        req.flash("notice", "Sorry, the registration failed.")
         res.status(500).render("account/register", {
             title: "Registration",
             nav,
@@ -98,14 +80,97 @@ async function registerAccount(req, res) {
 }
     
 /* ****************************************
-*  Deliver 'My Account' view (stub)
+*  Deliver 'My Account' view
 * *************************************** */
 async function buildAccount(req, res) {
-    let nav = await utilities.getNav()
-    res.render("account/account", {
-        title: "My Account",
-        nav,
-    })
+    try {
+        let nav = await utilities.getNav()
+        
+        // Check if user is logged in
+        if (!res.locals.accountData) {
+            return res.redirect("/account/login")
+        }
+        
+        res.render("account/account", {
+            title: "My Account",
+            nav,
+            accountData: res.locals.accountData,
+            loggedin: true
+        })
+    } catch (error) {
+        console.error("Error in buildAccount:", error)
+        res.redirect("/account/login")
+    }
 }
 
-module.exports = { buildLogin, buildRegister, registerAccount, loginAccount, buildAccount }
+/* ****************************************
+ *  Process login request
+ * ************************************ */
+async function accountLogin(req, res) {
+    console.log("=== ACCOUNT LOGIN FUNCTION CALLED ===")
+    console.log("Request body:", req.body)
+    
+    let nav = await utilities.getNav()
+    let { account_email, account_password } = req.body
+    
+    // Normalize email
+    account_email = account_email.toLowerCase().trim()
+    
+    try {
+        const accountData = await accModel.getAccountByEmail(account_email)
+        
+        if (!accountData) {
+            console.log("No account found for email:", account_email)
+            return res.status(401).render("account/login", {
+                title: "Login",
+                nav,
+                errors: [{ msg: "Please check your credentials and try again." }],
+                account_email,
+            })
+        }
+        
+        const isMatch = await bcrypt.compare(account_password, accountData.account_password)
+        
+        if (isMatch) {
+            console.log("Login successful for:", account_email)
+            
+            // Remove password before creating token
+            delete accountData.account_password
+            
+            const accessToken = jwt.sign(
+                accountData, 
+                process.env.ACCESS_TOKEN_SECRET, 
+                { expiresIn: "1h" }
+            )
+            
+            // Set cookie
+            res.cookie("jwt", accessToken, {
+                httpOnly: true,
+                maxAge: 3600000,
+                path: '/',
+                sameSite: 'lax'
+            })
+            
+            console.log("Login successful, redirecting to /account/")
+            return res.redirect("/account/")
+        } else {
+            console.log("Password mismatch for email:", account_email)
+            return res.status(401).render("account/login", {
+                title: "Login",
+                nav,
+                errors: [{ msg: "Please check your credentials and try again." }],
+                account_email,
+            })
+        }
+    } catch (error) {
+        console.error("Login error:", error)
+        return res.status(500).render("account/login", {
+            title: "Login",
+            nav,
+            errors: [{ msg: "An error occurred during login. Please try again." }],
+            account_email,
+        })
+    }
+}
+
+module.exports = { buildLogin, buildRegister, registerAccount, buildAccount, accountLogin }

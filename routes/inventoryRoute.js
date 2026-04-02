@@ -20,4 +20,23 @@ router.get("/type/:classification_id", invController.buildByClassification);
 // Route to build the inventory management view
 router.get("/", invController.buildManagement);
 
+// Route to show edit inventory form
+router.get("/getInventory/:classification_id", invController.getInventoryJSON);
+
+// Route to show edit inventory form
+router.get("/edit/:inv_id", invController.editInventoryView, (err, req, res, next) => {
+  // Error handler for this route
+  console.error(err)
+  res.status(500).render("errors/500", {
+    title: "Server Error",
+    message: "There was a problem loading the edit inventory view."
+  })
+})
+
+// Route to handle inventory update
+router.post("/update", invController.updateInventory)
+
+
+
+
 module.exports = router

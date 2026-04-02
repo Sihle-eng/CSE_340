@@ -1,17 +1,31 @@
-
 <h1>Inventory Management</h1>
 <%- messages() %>
-<!-- Flash message from controller -->
-<% if (typeof message !=='undefined' && message) { %>
-    <div class="flash-message">
-        <%= message %>
-    </div>
-<% } %>
+    <!-- Flash message from controller -->
+    <% if (typeof message !=='undefined' && message) { %>
+        <div class="flash-message">
+            <%= message %>
+        </div>
+        <% } %>
 
-<nav>
-    <ul>
-        <!-- Links go through controller routes, not directly to views -->
-        <li><a href="/inv/add-classification">Add New Classification</a></li>
-        <li><a href="/inv/add-inventory">Add New Inventory Item</a></li>
-    </ul>
-</nav>
+            <nav>
+                <ul>
+                    <!-- Links go through controller routes, not directly to views -->
+                    <li><a href="/inv/add-classification">Add New Classification</a></li>
+                    <li><a href="/inv/add-inventory">Add New Inventory Item</a></li>
+                </ul>
+            </nav>
+
+            <h2>Inventory Management</h2>
+            <p>Select a classification from the list below to see the items in that classification:</p>
+
+            <!-- Display classification select correctly -->
+            <%- classificationSelect %>
+
+                <!-- Empty table for inventory items -->
+                <table id="inventoryDisplay"></table>
+
+                <!-- Fallback if JavaScript is disabled -->
+                <noscript>JavaScript must be enabled to use this page.</noscript>
+
+                <!-- Hook up your client-side script -->
+                <script src="/js/inventory.js"></script>

@@ -84,7 +84,7 @@ module.exports = validate
 validate.loginRules = () => {
   return [
     // email is required and must be valid
-    body("email")
+    body("account_email")
       .trim()
       .escape()
       .notEmpty()
@@ -93,7 +93,7 @@ validate.loginRules = () => {
       .withMessage("A valid email is required."),
 
     // password is required
-    body("password")
+    body("account_password")
       .trim()
       .notEmpty()
       .withMessage("Password is required."),
@@ -104,7 +104,7 @@ validate.loginRules = () => {
  * Check login data and return errors or continue to login
  * ***************************** */
 validate.checkLoginData = async (req, res, next) => {
-  const { email } = req.body
+  const { account_email } = req.body
   let errors = []
   errors = validationResult(req)
   if (!errors.isEmpty()) {
@@ -113,7 +113,7 @@ validate.checkLoginData = async (req, res, next) => {
       errors,
       title: "Login",
       nav,
-      email,
+      account_email,
     })
     return
   }

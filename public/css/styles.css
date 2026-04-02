@@ -569,3 +569,152 @@ ul.notice li {
   margin-bottom: 0.5rem;
 }
 
+/* Dropdown Styling */
+#classificationList {
+  width: 250px;
+  padding: 8px;
+  font-size: 1rem;
+  font-family: Arial, sans-serif;
+  color: #000;
+  /* black text */
+  background-color: #fff;
+  /* white background */
+  border: 1px solid #000;
+  /* black border */
+  border-radius: 4px;
+  appearance: none;
+  /* removes default browser arrow styling */
+  cursor: pointer;
+}
+
+/* Style the dropdown options */
+#classificationList option {
+  color: #000;
+  background-color: #fff;
+}
+
+/* Hover/focus effect */
+#classificationList:hover,
+#classificationList:focus {
+  border-color: #333;
+  /* slightly darker border on hover/focus */
+  outline: none;
+}
+
+/* Inventory Management Table Styling */
+#inventoryDisplay {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-family: Arial, sans-serif;
+  background-color: #fff;
+  /* white background */
+  color: #000;
+  /* black text */
+}
+
+#inventoryDisplay th,
+#inventoryDisplay td {
+  border: 1px solid #000;
+  /* black borders */
+  padding: 8px 12px;
+  text-align: left;
+}
+
+#inventoryDisplay th {
+  background-color: #000;
+  /* black header */
+  color: #fff;
+  /* white text in header */
+  font-weight: bold;
+}
+
+#inventoryDisplay tr:nth-child(even) {
+  background-color: #f2f2f2;
+  /* light gray for alternating rows */
+}
+
+#inventoryDisplay tr:hover {
+  background-color: #ddd;
+  /* highlight row on hover */
+}
+
+/* General form styling */
+.form {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background-color: #fff;
+  /* white background */
+  border: 1px solid #000;
+  /* black border */
+  border-radius: 6px;
+  font-family: Arial, sans-serif;
+  color: #000;
+  /* black text */
+}
+
+/* Labels */
+.form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #000;
+}
+
+/* Inputs, textareas, and select */
+.form input[type="text"],
+.form input[type="number"],
+.form textarea,
+.form select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 0.5rem;
+  border: 1px solid #000;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #000;
+  font-size: 1rem;
+}
+
+/* Dropdown specific styling */
+#classificationList {
+  cursor: pointer;
+  appearance: none;
+  /* removes default browser arrow */
+}
+
+#classificationList option {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Submit button */
+.form button {
+  margin-top: 1.5rem;
+  padding: 10px 16px;
+  background-color: #000;
+  /* black background */
+  color: #fff;
+  /* white text */
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.form button:hover {
+  background-color: #333;
+  /* slightly lighter black on hover */
+}
+
+/* Error messages */
+.notice {
+  margin-top: 1rem;
+  padding: 0.5rem;
+  border: 1px solid #000;
+  background-color: #f2f2f2;
+  /* light gray background */
+  color: #000;
+  list-style-type: square;
+}

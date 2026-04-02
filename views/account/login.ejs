@@ -1,14 +1,28 @@
 <body>
     <main class="form">
         <h1><%= title %></h1>
-        <%- messages() %>
+            <% if (typeof errors !=='undefined' && errors && errors.length> 0) { %>
+                <div class="error-messages">
+                    <% errors.forEach(function(error) { %>
+                        <p class="error">
+                            <%= error.msg %>
+                        </p>
+                        <% }); %>
+                </div>
+                <% } %>
+            
+                    <% if (typeof notice !=='undefined' && notice) { %>
+                        <div class="notice">
+                            <%= notice %>
+                        </div>
+                        <% } %>
 
         <form class="login-form" id="loginForm" action="/account/login" method="POST">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required value="<%= typeof email !== 'undefined' ? email : '' %>">
+            <label for="account_email">Email:</label>
+            <input type="email" id="account_email" name="account_email" required value="<%= typeof email !== 'undefined' ? email : '' %>">
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required minlength="8">
+            <label for="account_password">Password:</label>
+            <input type="password" id="account_password" name="account_password" required minlength="8">
 
             <button type="submit">Login</button>
         </form>
@@ -28,3 +42,4 @@
         <% } %>
     </main>
 </body>
+

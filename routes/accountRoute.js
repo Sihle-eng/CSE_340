@@ -5,7 +5,7 @@ const utilities = require("../utilities")
 const accController = require("../controllers/accountController")
 const regValidate = require("../utilities/account-validation")
 
-//route to build the loign view
+//route to build the login view // Fixed: corrected spelling from "loign" to "login"
 router.get("/login", accController.buildLogin)
 
 //route to build the registration view
@@ -24,19 +24,11 @@ router.post(
   "/login",
   regValidate.loginRules(),
   regValidate.checkLoginData,
-  utilities.handleErrors(accController.loginAccount)
+  utilities.handleErrors(accController.accountLogin)
 )
 
 //route to build the "My account" view
-router.get("/", utilities.handleErrors(accController.buildAccount))
-
-//process login attempts
-router.post(
-  "/login",
-  (req, res) => {
-    res.status(200).send('login process')
-  }
-)
+router.get("/",utilities.checkJWTToken, utilities.handleErrors(accController.buildAccount))
 
 //export the router
 module.exports = router

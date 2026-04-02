@@ -18,6 +18,7 @@ const pool = require('./database')
 const errorRoute = require("./routes/errorRoute")
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
+const cookieParser = require("cookie-parser")
 
 app.set("view engine", "ejs")
 app.use(expressLayouts)
@@ -27,6 +28,14 @@ app.set("layout", "./layouts/layout")
 /* ***********************
  * Middleware
  * ************************/
+// Body parsers (these don't depend on anything)
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
+
+// Cookie parser (needed before session and JWT)
+app.use(cookieParser())
+
+// Session (needs cookie parser)
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableMissing: true,
@@ -38,16 +47,31 @@ app.use(session({
   name: 'sessionId',
 }))
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
-
-
-// Express messages middleware
+// 4. Flash messages (needs session)
 app.use(require('connect-flash')())
+
+// Make flash messages available to all views
 app.use(function (req, res, next) {
-  res.locals.messages = require('express-messages')(req, res)
-  next()
+    // Create messages function for templates
+    res.locals.messages = function() {
+        // Return HTML for flash messages
+        let html = ''
+        const types = ['success', 'error', 'notice', 'info']
+        types.forEach(type => {
+            const messages = req.flash(type)
+            if (messages && messages.length) {
+                messages.forEach(message => {
+                    html += `<div class="${type}">${message}</div>`
+                })
+            }
+        })
+        return html
+    }
+    next()
 })
+// JWT Check (needs cookie parser to read the JWT cookie)
+app.use(utilities.checkJWTToken)
+
 
 
 
@@ -109,5 +133,3 @@ const host = process.env.HOST
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)
 })
-
-
