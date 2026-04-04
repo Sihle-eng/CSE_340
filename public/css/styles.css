@@ -48,30 +48,37 @@ body {
   background: #a00;
 }
 
-/* Navigation */
 .site-header {
-  background: #333;
-  padding: 0.5rem 2rem;
+  background-color: #333;
+  padding: 0.5em 1em;
 }
 
 .site-header ul {
-  display: flex;
   list-style: none;
   margin: 0;
   padding: 0;
-  gap: 1.5rem;
+  display: flex;
+  /* ✅ flexbox for horizontal layout */
+  flex-wrap: wrap;
+  /* allows wrapping if too many items */
+  gap: 1em;
+  /* space between items */
 }
 
-.site-header ul li a {
+.site-header li {
+  display: inline;
+  /* each nav item inline */
+}
+
+.site-header a {
   color: #fff;
   text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s;
+  padding: 0.5em;
 }
 
-.site-header ul li a:hover {
-  text-decoration: underline;
-  color: #ddd;
+.site-header a:hover {
+  background-color: #555;
+  border-radius: 4px;
 }
 
 /* Pipe separators between nav items */
