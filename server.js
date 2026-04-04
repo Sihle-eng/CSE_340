@@ -19,6 +19,8 @@ const errorRoute = require("./routes/errorRoute")
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
+const { checkJWTToken } = require("./models/middleware/authMiddleware");
+
 
 app.set("view engine", "ejs")
 app.use(expressLayouts)
@@ -73,6 +75,7 @@ app.use(function (req, res, next) {
 app.use(utilities.checkJWTToken)
 
 
+app.use(checkJWTToken);
 
 
 

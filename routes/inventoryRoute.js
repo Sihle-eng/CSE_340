@@ -2,11 +2,12 @@
 const express = require("express")
 const router = new express.Router()
 const invController = require("../controllers/invController")
+const { checkAccountType } = require("../models/middleware/authMiddleware");
 
 // Route to show add-inventory form
-router.get("/add-inventory", invController.buildAddInventory);
+router.get("/add-inventory", checkAccountType, invController.buildAddInventory);
 // Route to handle add-inventory form submission
-router.post("/add-inventory", invController.addInventory);
+router.post("/add-inventory", checkAccountType, invController.addInventory);
 // Route to show add-classification form
 router.get("/add-classification", invController.buildAddClassification);
 // Route to handle add-classification form submission
@@ -36,6 +37,11 @@ router.get("/edit/:inv_id", invController.editInventoryView, (err, req, res, nex
 // Route to handle inventory update
 router.post("/update", invController.updateInventory)
 
+// Route to handle inventory deletion
+router.get("/delete/:inv_id", invController.buildDeleteConfirmation)
+
+// perform the deletion 
+router.post("/delete", invController.deleteInventoryItem)
 
 
 

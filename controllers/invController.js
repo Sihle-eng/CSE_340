@@ -374,6 +374,48 @@ invCont.updateInventory = async function (req, res, next) {
   }
 }
 
+/* ***************************
+ *  Build Delete Confirmation View
+ * ************************** */
+invCont.buildDeleteConfirmation = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.params.inv_id);
+    const nav = await utilities.getNav();
+    const itemData = await invModel.getVehicleById(inv_id);
+
+    const itemName = `${itemData.make} ${itemData.model}`;
+
+    res.render("inventory/delete-confirm", {
+      title: `Delete ${itemName}`,
+      nav,
+      errors: null,
+      inv: itemData
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/* ***************************
+ *  Delete Inventory Item
+ * ************************** */
+invCont.deleteInventoryItem = async function (req, res, next) {
+  try {
+    const inv_id = parseInt(req.body.inv_id);
+    const result = await invModel.deleteInventoryItem(inv_id);
+
+    if (result.rowCount > 0) {
+      req.flash("notice", "The item was successfully deleted.");
+      res.redirect("/inv/");
+    } else {
+      req.flash("notice", "Delete failed. Please try again.");
+      res.redirect(`/inv/delete/${inv_id}`);
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 
 
 module.exports = invCont;

@@ -28,7 +28,19 @@ router.post(
 )
 
 //route to build the "My account" view
-router.get("/",utilities.checkJWTToken, utilities.handleErrors(accController.buildAccount))
+router.get("/", utilities.checkJWTToken, utilities.handleErrors(accController.buildAccount))
+
+router.get("/", accController.buildManagement);
+
+router.get("/logout", accController.logout);
+
+router.get("/update/:account_id", accController.buildUpdateView);
+
+router.post("/update", accController.updateAccountInfo);
+
+router.post("/update-password", accController.updatePassword);
+
+
 
 //export the router
 module.exports = router

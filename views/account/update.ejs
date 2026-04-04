@@ -1,0 +1,64 @@
+
+<body>
+    <h1>
+        <%= title %>
+    </h1>
+
+                <% if (typeof message !=="undefined" ) { %>
+                    <div class="flash-message">
+                        <% message %>
+                    </div>
+                    <% } %>
+            
+        <!-- Validation errors -->
+        <% if (errors) { %>
+            <div class="errors">
+                <% errors.forEach(function(error) { %>
+                    <p>
+                        <%= error.msg %>
+                    </p>
+                    <% }) %>
+            </div>
+            <% } %>
+
+                <!-- Account Update Form -->
+                <form class="form" action="/account/update" method="post">
+                    <fieldset>
+                        <legend>Account Update</legend>
+
+                        <label for="account_firstname">First Name</label>
+                        <input type="text" id="account_firstname" name="account_firstname"
+                            value="<%= account.account_firstname || '' %>" required>
+
+                        <label for="account_lastname">Last Name</label>
+                        <input type="text" id="account_lastname" name="account_lastname"
+                            value="<%= account.account_lastname || '' %>" required>
+
+                        <label for="account_email">Email</label>
+                        <input type="email" id="account_email" name="account_email"
+                            value="<%= account.account_email || '' %>" required>
+
+                        <!-- Hidden account_id -->
+                        <input type="hidden" name="account_id" value="<%= account.account_id %>">
+
+                        <input type="submit" value="Update Account">
+                    </fieldset>
+                </form>
+
+                <!-- Change Password Form -->
+                <form action="/account/update-password" method="post">
+                    <fieldset>
+                        <legend>Change Password</legend>
+
+                        <label for="account_password">New Password</label>
+                        <input type="password" id="account_password" name="account_password" required>
+                        <p>Password must be at least 8 characters, include letters and numbers.</p>
+
+                        <!-- Hidden account_id -->
+                        <input type="hidden" name="account_id" value="<%= account.account_id %>">
+
+                        <input type="submit" value="Change Password">
+                    </fieldset>
+                </form>
+</body>
+
