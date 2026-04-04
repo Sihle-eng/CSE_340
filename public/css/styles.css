@@ -58,11 +58,8 @@ body {
   margin: 0;
   padding: 0;
   display: flex;
-  /* ✅ flexbox for horizontal layout */
   flex-wrap: wrap;
-  /* allows wrapping if too many items */
   gap: 1em;
-  /* space between items */
 }
 
 .site-header li {
