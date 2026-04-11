@@ -1,38 +1,72 @@
-
 <body>
     <h1>
         <%= title %>
     </h1>
 
+    <!-- Show account info -->
+    <section class="account-info">
+        <h2>Welcome <%= accountData.account_firstname %>
+        </h2>
+        <p><strong>Email:</strong>
+            <%= accountData.account_email %>
+        </p>
+        <p><strong>Account Type:</strong>
+            <%= accountData.account_type %>
+        </p>
+    </section>
 
-        <!-- Show account info -->
-        <section class="account-info">
-            <h2>Welcome <%= accountData.account_firstname %>
-            </h2>
-            <p><strong>Email:</strong>
-                <%= accountData.account_email %>
-            </p>
-            <p><strong>Account Type:</strong>
-                <%= accountData.account_type %>
-            </p>
+    <!-- Conditional Inventory Management -->
+    <% if (accountData.account_type==="Employee" || accountData.account_type==="Admin" ) { %>
+        <section class="account-management">
+            <h3>Inventory Management</h3>
+            <p><a href="/inv/">Go to Inventory Management</a></p>
         </section>
+        <% } %>
 
-        <!-- Conditional Inventory Management -->
-        <% if (accountData.account_type==="Employee" || accountData.account_type==="Admin" ) { %>
+            <!-- Update Account Link -->
             <section class="account-management">
-                <h3>Inventory Management</h3>
-                <p><a href="/inv/">Go to Inventory Management</a></p>
+                <h2>Manage Your Account</h2>
+                <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
             </section>
-            <% } %>
 
-                <!-- Update Account Link -->
+            <!-- Orders: only for Clients -->
+            <% if (accountData.account_type==="Client" ) { %>
                 <section class="account-management">
-                    <h3>Manage Your Account</h3>
-                    <p><a href="/account/update/<%= accountData.account_id %>">Update Account Information</a></p>
+                    <h2>My Orders</h2>
+                    <% if (orders.length> 0) { %>
+                        <ul>
+                            <% orders.forEach(order=> { %>
+                                <li>
+                                    <h3>Order #<%= order.order_id %>
+                                    </h3>
+                                    <p><strong>Date:</strong>
+                                        <%= order.order_date.toDateString() %>
+                                    </p>
+                                    <p><strong>Status:</strong>
+                                        <%= order.status %>
+                                    </p>
+                                    <p><strong>Total:</strong> $<%= Number(order.total).toFixed(2) %>
+                                    </p>
+                                    <p><strong>Payment:</strong>
+                                        <%= order.payment_method %>
+                                    </p>
+                                    <p><strong>Vehicle:</strong>
+                                        <%= order.inv_year %>
+                                            <%= order.inv_make %>
+                                                <%= order.inv_model %>
+                                                    (<%= order.inv_color %>)
+                                    </p>
+                                </li>
+                                <% }) %>
+                        </ul>
+                        <% } else { %>
+                            <p>No orders yet.</p>
+                            <% } %>
                 </section>
+                <% } %>
 
-                <!-- Logout Link -->
-                <section class="logout">
-                    <p><a href="/account/logout">Logout</a></p>
-                </section>
+                    <!-- Logout Link -->
+                    <section class="logout">
+                        <p><a href="/account/logout">Logout</a></p>
+                    </section>
 </body>

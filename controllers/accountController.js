@@ -1,6 +1,7 @@
 //required resources
 const utilities = require("../utilities")
 const accModel = require("../models/account-model")
+const orderModel = require("../models/order-model")
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 require("dotenv").config()
@@ -85,17 +86,26 @@ async function registerAccount(req, res) {
 async function buildAccount(req, res) {
     try {
         let nav = await utilities.getNav()
-        
-        // Check if user is logged in
+
+
         if (!res.locals.accountData) {
             return res.redirect("/account/login")
+            }
+        
+        // Check if user is logged in
+        let orders = [];
+
+        if (res.locals.accountData.account_type === "Client") {
+            orders = await orderModel.getOrdersByAccountId(res.locals.accountData.account_id)
         }
         
         res.render("account/account", {
             title: "My Account",
             nav,
             accountData: res.locals.accountData,
-            loggedin: true
+            loggedin: true,
+            orders,
+            messages: req.flash()
         })
     } catch (error) {
         console.error("Error in buildAccount:", error)

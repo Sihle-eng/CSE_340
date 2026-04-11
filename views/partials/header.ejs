@@ -3,7 +3,7 @@
         <a href="/" title="Return to home page">CSE Motors</a>
     </span>
     <div id="tools">
-        <% if (loggedIn) { %>
+        <% if (loggedIn && accountData) { %>
             <!-- Account management link -->
             <a href="/account" title="Go to account management">
                 Welcome <%= accountData.account_firstname %>

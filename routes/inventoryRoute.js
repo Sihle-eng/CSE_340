@@ -43,6 +43,6 @@ router.get("/delete/:inv_id", invController.buildDeleteConfirmation)
 // perform the deletion 
 router.post("/delete", invController.deleteInventoryItem)
 
-
+router.get("/details/:car_id", invController.buildCarDetails)
 
 module.exports = router

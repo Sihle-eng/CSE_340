@@ -2,6 +2,7 @@
  * This server.js file is the primary file of the 
  * application. It is used to control the project.
  *******************************************/
+
 /* ***********************
  * Require Statements
  *************************/
@@ -19,25 +20,27 @@ const errorRoute = require("./routes/errorRoute")
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
 const cookieParser = require("cookie-parser")
-const { checkJWTToken } = require("./models/middleware/authMiddleware");
+const { checkJWTToken } = require("./models/middleware/authMiddleware")
+const orderRoute = require("./routes/orderRouter")
 
-
+/* ***********************
+ * View Engine
+ *************************/
 app.set("view engine", "ejs")
 app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
-
 /* ***********************
  * Middleware
- * ************************/
-// Body parsers (these don't depend on anything)
+ *************************/
+// Body parsers
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
-// Cookie parser (needed before session and JWT)
+// Cookie parser
 app.use(cookieParser())
 
-// Session (needs cookie parser)
+// Session
 app.use(session({
   store: new (require('connect-pg-simple')(session))({
     createTableMissing: true,
@@ -49,69 +52,68 @@ app.use(session({
   name: 'sessionId',
 }))
 
-// 4. Flash messages (needs session)
+// Flash messages
 app.use(require('connect-flash')())
 
 // Make flash messages available to all views
 app.use(function (req, res, next) {
-    // Create messages function for templates
-    res.locals.messages = function() {
-        // Return HTML for flash messages
-        let html = ''
-        const types = ['success', 'error', 'notice', 'info']
-        types.forEach(type => {
-            const messages = req.flash(type)
-            if (messages && messages.length) {
-                messages.forEach(message => {
-                    html += `<div class="${type}">${message}</div>`
-                })
-            }
+  res.locals.messages = function() {
+    let html = ''
+    const types = ['success', 'error', 'notice', 'info']
+    types.forEach(type => {
+      const messages = req.flash(type)
+      if (messages && messages.length) {
+        messages.forEach(message => {
+          html += `<div class="${type}">${message}</div>`
         })
-        return html
-    }
-    next()
+      }
+    })
+    return html
+  }
+  next()
 })
-// JWT Check (needs cookie parser to read the JWT cookie)
-app.use(utilities.checkJWTToken)
 
+// JWT check (sets res.locals.loggedIn and res.locals.accountData)
+app.use(checkJWTToken)
 
-app.use(checkJWTToken);
+// Guard middleware: ensure defaults and fallback to session if needed
+app.use((req, res, next) => {
+  if (typeof res.locals.loggedIn === "undefined") {
+    res.locals.loggedIn = false
+  }
+  if (!res.locals.accountData && req.session.accountData) {
+    res.locals.accountData = req.session.accountData
+    res.locals.loggedIn = true
+  }
+  next()
+})
 
-
-
-
-
-
-
-
-
-
-/* ***********************
- * View Engine aand Templates
- *************************/
 /* ***********************
  * Routes
  *************************/
 app.use(static)
+app.use("/order", orderRoute)
 
 // Index route
 app.get("/", baseController.buildHome)
+
 // Inventory by classification route
 app.use("/inv", inventoryRoute)
 
 // Error trigger route
 app.use("/error", errorRoute)
-// Account route (must be before 404 handler)
+
+// Account route
 app.use("/account", accountRoute)
-// File Not Found Route - must be last route in list
+
+// File Not Found Route
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})
 })
 
 /* ***********************
-* Express Error Handler
-* Place after all other middleware
-*************************/
+ * Express Error Handler
+ *************************/
 app.use(async (err, req, res, next) => {
   let nav = await utilities.getNav()
   console.error(`Error at: "${req.originalUrl}": ${err.message}`)
@@ -122,16 +124,14 @@ app.use(async (err, req, res, next) => {
   })
 })
 
-
 /* ***********************
  * Local Server Information
- * Values from .env (environment) file
  *************************/
 const port = process.env.PORT
 const host = process.env.HOST
 
 /* ***********************
- * Log statement to confirm server operation
+ * Start Server
  *************************/
 app.listen(port, () => {
   console.log(`app listening on ${host}:${port}`)

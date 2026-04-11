@@ -1,0 +1,81 @@
+<h1>Confirm Purchase</h1>
+
+<section class="vehicle-info">
+    <h2>
+        <%= vehicle.inv_year %>
+            <%= vehicle.inv_make %>
+                <%= vehicle.inv_model %>
+    </h2>
+    <p><strong>Price:</strong>
+        <%= vehicle.priceFormatted %>
+    </p>
+    <p><strong>Mileage:</strong>
+        <%= vehicle.mileageFormatted %> miles
+    </p>
+    <p><strong>Description:</strong>
+        <%= vehicle.inv_description %>
+    </p>
+    <p><strong>Color:</strong>
+        <%= vehicle.inv_color %>
+    </p>
+    <p><strong>Classification:</strong>
+        <%= vehicle.classification_name %>
+    </p>
+</section>
+
+<form class="form" action="/order/confirm" method="POST">
+    <input type="hidden" name="car_id" value="<%= vehicle.inv_id %>">
+    <input type="hidden" name="total" value="<%= vehicle.inv_price %>">
+
+    <label for="payment_method">Payment Method:</label>
+    <select id="payment_method" name="payment_method" required>
+        <option value="">-- Select --</option>
+        <option value="Credit Card">Credit Card</option>
+        <option value="Bank Transfer">Bank Transfer</option>
+    </select>
+
+    <!-- Credit Card fields -->
+    <div id="credit-card-fields" style="display:none;">
+        <label for="card_number">Card Number:</label>
+        <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456">
+
+        <label for="expiry">Expiry Date:</label>
+        <input type="text" id="expiry" name="expiry" placeholder="MM/YY">
+
+        <label for="cvv">CVV:</label>
+        <input type="text" id="cvv" name="cvv" placeholder="123">
+    </div>
+
+    <!-- Bank Transfer fields -->
+    <div id="bank-transfer-fields" style="display:none;">
+        <label for="account_number">Bank Account Number:</label>
+        <input type="text" id="account_number" name="account_number" placeholder="Your account number">
+
+        <label for="bank_name">Bank Name:</label>
+        <input type="text" id="bank_name" name="bank_name" placeholder="Your bank name">
+    </div>
+
+    <button type="submit">Confirm Order</button>
+</form>
+
+<script>
+    const paymentSelect = document.getElementById('payment_method');
+    const cardFields = document.getElementById('credit-card-fields');
+    const bankFields = document.getElementById('bank-transfer-fields');
+
+    paymentSelect.addEventListener('change', function () {
+        cardFields.style.display = this.value === 'Credit Card' ? 'block' : 'none';
+        bankFields.style.display = this.value === 'Bank Transfer' ? 'block' : 'none';
+
+        // Clear required attributes first
+        cardFields.querySelectorAll('input').forEach(i => i.required = false);
+        bankFields.querySelectorAll('input').forEach(i => i.required = false);
+
+        // Add required only to visible fields
+        if (this.value === 'Credit Card') {
+            cardFields.querySelectorAll('input').forEach(i => i.required = true);
+        } else if (this.value === 'Bank Transfer') {
+            bankFields.querySelectorAll('input').forEach(i => i.required = true);
+        }
+    });
+</script>

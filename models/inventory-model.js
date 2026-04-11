@@ -112,13 +112,14 @@ async function deleteInventoryItem(inv_id) {
   }
 }
 
-module.exports = {
-  // ... other functions
-  deleteInventoryItem
-};
+// get car details by id
+async function getCarById(car_id) {
+    const sql = "SELECT * FROM inventory WHERE inv_id = $1";
+    const result = await pool.query(sql, [car_id]);
+    return result.rows[0];
+}
 
-
-module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, addClassification, addInventory, updateInventory, deleteInventoryItem}
+module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, addClassification, addInventory, updateInventory, deleteInventoryItem, getCarById}
 
 
 

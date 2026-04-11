@@ -416,6 +416,30 @@ invCont.deleteInventoryItem = async function (req, res, next) {
   }
 }
 
+invCont.buildCarDetails = async function (req, res) {
+    let nav = await utilities.getNav();
+    const car_id = req.params.car_id;
+
+    try {
+        const car = await inventoryModel.getCarById(car_id);
+
+        if (!car) {
+            req.flash("notice", "Car not found.");
+            return res.redirect("/inv/");
+        }
+
+        res.render("inventory/details", {
+            title: `${car.inv_make} ${car.inv_model}`,
+            nav,
+            vehicle:car,
+            account_type: res.locals.accountData ? res.locals.accountData.account_type : null
+        });
+    } catch (error) {
+        console.error("Error building car details:", error);
+        res.redirect("/inv/");
+    }
+}
+
 
 
 module.exports = invCont;
