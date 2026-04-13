@@ -42,7 +42,7 @@ async function processOrder(req, res) {
   let nav = await utilities.getNav();
   const { car_id, total, payment_method } = req.body;
 
-  // ✅ Guard against missing accountData
+
   if (!res.locals.accountData) {
     req.flash("error", "You must be logged in to place an order.");
     return res.redirect("/account/login");

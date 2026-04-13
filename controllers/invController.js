@@ -160,7 +160,7 @@ invCont.buildVehicleDetails = async function (req, res, next) {
         if (!vehicleData) {
             return res.status(404).render("./errors/404", {
                 title: "Vehicle Not Found",
-                nav: await utilities.getNav(),
+                nav: await utilities.getNav()
             });
         }
         
@@ -177,6 +177,8 @@ invCont.buildVehicleDetails = async function (req, res, next) {
             title: `${vehicleData.inv_make} ${vehicleData.inv_model} Details`,
             nav: await utilities.getNav(),
             vehicle: vehicleData,
+            accountData: res.locals.accountData,
+            loggedIn: res.locals.loggedIn
         });
 
     } catch (error) {
@@ -432,7 +434,7 @@ invCont.buildCarDetails = async function (req, res) {
             title: `${car.inv_make} ${car.inv_model}`,
             nav,
             vehicle:car,
-            account_type: res.locals.accountData ? res.locals.accountData.account_type : null
+            accountData: res.locals.accountData
         });
     } catch (error) {
         console.error("Error building car details:", error);
